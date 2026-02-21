@@ -1,0 +1,25 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% block title %}Password Reset Confirmation{% endblock title %}
+
+{% block content %}
+
+<div class="flex items-center justify-center px-4 py-8">
+    <div class="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-center">Set New Password</h2>
+        <form action="{% url 'password_reset_confirm_view' uidb64=uidb64 token=token %}" method="POST" id="reset-pass-form" class="space-y-6" novalidate>
+            {% csrf_token %}
+            <div>
+                <label for="new_password1" class="block text-sm font-medium">New Password:</label>
+                <input type="password" name="new_password1" id="new_password1" class="block w-full mt-1 border-gray-300 rounded shadow-sm p-2" placeholder="Enter your password" required>
+            </div>
+            <div>
+                <label for="new_password2" class="block text-sm font-medium">Confirm Password:</label>
+                <input type="password" name="new_password2" id="new_password2" class="block w-full mt-1 border-gray-300 rounded shadow-sm p-2" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" id="submit-btn" class="px-4 py-2 w-full bg-rose-600 text-white font-bold rounded-md hover:bg-rose-700 focus:outline-none focus:bg-rose-700 shadow-sm">Reset Password</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

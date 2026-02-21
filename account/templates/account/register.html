@@ -1,0 +1,110 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+
+<div class="flex items-center justify-center px-4 py-8">
+    <div class="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-md ">
+        <h2 class="text-2xl font-bold text-center "> Create an account</h2>
+        <form action="{% url "register" %}" method="POST" class="space-y-6" novalidate>
+            {% csrf_token %}
+
+            {% comment %} <div>
+                <label for="name" class="block text-sm font-medium">Name:</label>
+                <input type="text" value="{{ form.name.value|default:"" }}" name="name" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" placeholder="Enter your name" required>
+
+                {% if form.name.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for i in form.name.errors %}
+                            <p>{{ i }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium">Email:</label>
+                <input type="email" value="{{ form.email.value|default:"" }}" name="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" placeholder="Enter your email" required>
+
+                {% if form.email.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for i in form.email.errors %}
+                            <p>{{ i }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium">Password:</label>
+                <input type="password" name="password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" placeholder="Enter your password" required>
+
+                {% if form.password.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for i in form.password.errors %}
+                            <p>{{ i }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div>
+                <label for="confirm_password" class="block text-sm font-medium">Confirm Password:</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500 sm:text-sm" placeholder="Confirm your password" required>
+
+                {% if form.confirm_password.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for i in form.confirm_password.errors %}
+                            <p>{{ i }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            </div>  {% endcomment %}
+
+
+            
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium">{{ field.label }}</label>
+                    {{ field }}
+                
+                    {% if field.errors %}
+                        <div class="text-red-500 text-sm mt-1">
+                            {% for i in field.errors %}
+                                <p>{{ i }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            
+                <button type="submit" class="px-4 py-2 w-full bg-rose-600 text-white font-bold p-2 rounded-md hover:bg-rose-700 focus:outline-none focus:bg-rose-700 shadow-sm">Register</button>
+
+
+        </form>
+
+        {% comment %} Divider {% endcomment %}
+        <div class="relative mt-6">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-gray-800 text-white-400">Or</span>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <a href="{% url "login" %}" class="px-4 py-2 bg-gray-800 text-white font-bold p-2 rounded-md hover:bg-rose-700 focus:outline-none focus:bg-gray-700 shadow-sm">Login</a>
+        </div>
+     
+    </div>
+
+</div>
+
+{% endblock %}

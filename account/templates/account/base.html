@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    {% comment %} <link rel="stylesheet" href="{% static 'account/css/main.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'account/css/style.css' %}"> {% endcomment %}
+
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header>
+        <nav class="bg-gray-800 text-white">
+            <div class="max-w-screen-xl flex flex-wrap itself-center justify-between mx-auto p-4">
+                <a href="{% url "home" %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap">HS WEB</span>
+                </a>
+
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul class="font-medium flex flex-row space-x-8">
+                        <li>
+                            <a href="{% url "home" %}" class="block py-2 px-3" aria-current="page">Home</a>
+                        </li>
+
+                        {% if user.is_authenticated %}
+                            {% if user.is_seller %}
+                            <li>
+                                <a href="{% url "seller_dashboard" %}" class="block py-2 px-3">Dashboard</a>
+                            </li>
+                            {% elif user.is_customer %}
+                            <li>
+                                <a href="{% url "customer_dashboard" %}" class="block py-2 px-3">Dashboard</a>
+                            </li>
+                            {% endif %}
+
+                        <li>
+                            <form action="{% url "logout" %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="px-3 py-2  text-sm text-white bg-rose-900">Logout</button>
+                            </form>
+                        </li>
+
+                        {% else %}
+
+                        <li>
+                            <a href="{% url "register" %}" class="block py-2 px-3" aria-current="page">Register</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "login" %}" class="block py-2 px-3" aria-current="page">Login</a>
+                        </li>
+
+                        {% endif %}
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="flex-grow text-white bg-gray-600 pt-3" > 
+        {% if messages %}
+        {% for i in messages  %}
+        <span class="{{i.tags}} bg-rose-600 p-2 font-bold">{{i}}</span> <br> <br>
+
+        {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock content %}
+
+    </main>
+        
+    
+</body>
+</html>
